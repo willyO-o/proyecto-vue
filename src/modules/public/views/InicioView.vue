@@ -5,42 +5,13 @@
     <div class="container">
       <div class="row align-items-center">
 
-        <div 
-          v-for=" producto in listaProductos" :key="producto.id"
-        class="col-lg-4  mt-lg-0 mt-4">
-          <div class="card">
 
-            <div class="card-header p-0  mt-2 mx-2 z-index-2 position-relative">
+        <TarjetaProducto
+           v-for="producto in listaProductos" :key="producto.id"
+           :producto="producto"
 
-              <span class="badge bg-gradient-dark position-absolute top-0 end-0 mt-2 me-2">
-                {{ producto.categoria }}
-              </span>
+         />
 
-
-              <a class="d-block blur-shadow-image">
-                <img
-                  :src="primeraImagen(producto.imagen)"
-
-                  alt="img-colored-shadow" class="img-fluid border-radius-lg">
-              </a>
-            </div>
-            <div class="card-body text-center">
-              <h5 class="font-weight-normal">
-                <a href="javascript:;">
-                  {{  producto.titulo }}
-                </a>
-              </h5>
-              <h5>
-                Bs. {{ producto.precio }} 
-                
-              </h5>
-              <p class="mb-0">
-                {{ recortarTexto(producto.descripcion,80) }}
-              </p>
-              <button type="button" class="btn bg-gradient-info btn-sm mb-0 mt-3">Find out more</button>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
   </section>
@@ -228,9 +199,8 @@ import { ref, onBeforeMount } from 'vue'
 
 import {listarProductos } from '@/services/productoServicio.js'
 
-import { recortarTexto, primeraImagen } from '@/helpers/productoHeper.js'
 
-
+import TarjetaProducto from '@/modules/public/components/TarjetaProducto.vue'
 
 const listaProductos = ref([])
 
@@ -253,6 +223,8 @@ onBeforeMount(() => {
 
 
 })
+
+
 
 
 

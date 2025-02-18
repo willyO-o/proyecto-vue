@@ -11,8 +11,19 @@ const listarProductos = async (parametros = {}) => {
 }
 
 
+const listarProductoId = async (id)=>{
+    
+    const resultado = await axiosInstance.get('productos/'+id)
+
+    return resultado.data
+
+
+}
+
+
 
 
 export {
-    listarProductos
+    listarProductos,
+    listarProductoId,
 }

@@ -17,8 +17,14 @@ const primeraImagen = (imgTexto) => {
 
 }
 
+const convertirImagenes = (imgTexto) => {
+
+    return JSON.parse(imgTexto) || [];
+}
+
 
 export {
     recortarTexto,
-    primeraImagen
+    primeraImagen,
+    convertirImagenes
 }

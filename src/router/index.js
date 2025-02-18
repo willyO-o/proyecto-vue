@@ -15,9 +15,15 @@ const router = createRouter({
           path: '',
           name: 'Inicio',
           component: () => import('@/modules/public/views/InicioView.vue')
+        },
+        {
+          path: 'detalle-producto/:id',
+          name: 'DetalleProducto',
+          component: () => import('@/modules/public/views/DetalleProductoView.vue')
         }
       ]
     },
+
     // nivel 1 Privado Admin
     {
       path:'/admin',

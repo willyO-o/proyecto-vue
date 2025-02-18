@@ -33,7 +33,23 @@ export const useCarritoStore = defineStore('carrito',() => {
         let productoExistente = carrito.value.find(p => p.id == producto.id);
 
         if (productoExistente) {
-            productoExistente.cantidad += cantidad;
+
+            let cantidadProducto= Number(productoExistente.cantidad);
+
+            let sumatoria = cantidadProducto + Number(cantidad);
+
+            if(sumatoria > Number(producto.stock)){
+                
+                cantidadProducto= Number(producto.stock); 
+
+            }else{
+
+                cantidadProducto = cantidadProducto+ Number(cantidad);
+                
+                productoExistente.cantidad = cantidadProducto;
+
+            }
+
         } else {
             carrito.value.push({
                 id: producto.id,
@@ -41,7 +57,7 @@ export const useCarritoStore = defineStore('carrito',() => {
                 imagen: producto.imagen,
                 precio: producto.precio,
                 stock: producto.stock,
-                cantidad: cantidad,
+                cantidad: Number(cantidad),
             })
         }
 
@@ -51,7 +67,7 @@ export const useCarritoStore = defineStore('carrito',() => {
 
     const eliminarProducto = (producto) => {
 
-        carrito.value = carrito.value.filters(p => p.id != producto.id);
+        carrito.value = carrito.value.filter(p => p.id != producto.id);
 
         guardarCarrito();
     }
