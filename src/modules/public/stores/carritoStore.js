@@ -30,6 +30,10 @@ export const useCarritoStore = defineStore('carrito',() => {
 
     const agregarProducto = (producto, cantidad = 1) => {
 
+        if(!cantidad || cantidad == "" ){
+            cantidad = 1;
+        }
+
         let productoExistente = carrito.value.find(p => p.id == producto.id);
 
         if (productoExistente) {
@@ -37,10 +41,13 @@ export const useCarritoStore = defineStore('carrito',() => {
             let cantidadProducto= Number(productoExistente.cantidad);
 
             let sumatoria = cantidadProducto + Number(cantidad);
+            
 
             if(sumatoria > Number(producto.stock)){
                 
                 cantidadProducto= Number(producto.stock); 
+
+                productoExistente.cantidad = cantidadProducto;
 
             }else{
 
@@ -50,14 +57,17 @@ export const useCarritoStore = defineStore('carrito',() => {
 
             }
 
+
+
         } else {
+
             carrito.value.push({
                 id: producto.id,
                 titulo: producto.titulo,
                 imagen: producto.imagen,
                 precio: producto.precio,
                 stock: producto.stock,
-                cantidad: Number(cantidad),
+                cantidad: Number(cantidad) > Number(producto.stock) ? Number(producto.stock) : Number(cantidad),
             })
         }
 
@@ -77,13 +87,17 @@ export const useCarritoStore = defineStore('carrito',() => {
         guardarCarrito();
     }
 
-    const calcularTotal = () => {
+    function calcularTotal() {
 
         let total = 0;
 
-        carrito.value.foreach(p => {
+        carrito.value.reduce((acc, p) => {
             total += Number(p.precio) * Number(p.cantidad);
-        })
+        }, 0)
+
+        // carrito.value.foreach(p => {
+        //     total += Number(p.precio) * Number(p.cantidad);
+        // })
 
         return total;
     }

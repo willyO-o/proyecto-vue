@@ -25,36 +25,40 @@
               <ul class="navbar-nav navbar-nav-hover ms-auto">
 
                 <li class="nav-item ms-lg-auto">
-                  <a class="nav-link nav-link-icon me-2" href="https://github.com/creativetimofficial/material-kit"
-                    target="_blank">
+                  <RouterLink class="nav-link nav-link-icon me-2" 
+                    to="/"
+                    >
 
                     <p class="d-inline text-sm z-index-1 font-weight-semibold" data-bs-toggle="tooltip"
                       data-bs-placement="bottom" title="Star us on Github">Inicio</p>
-                  </a>
+                  </RouterLink>
                 </li>
                 <li class="nav-item ms-lg-auto">
-                  <a class="nav-link nav-link-icon me-2" href="https://github.com/creativetimofficial/material-kit"
-                    target="_blank">
+                  <RouterLink class="nav-link nav-link-icon me-2" 
+                  to="/tienda"
+                    >
 
                     <p class="d-inline text-sm z-index-1 font-weight-semibold" data-bs-toggle="tooltip"
                       data-bs-placement="bottom" title="Star us on Github">Tienda</p>
-                  </a>
+                  </RouterLink>
                 </li>
                 <li class="nav-item ms-lg-auto">
-                  <a class="nav-link nav-link-icon me-2" href="https://github.com/creativetimofficial/material-kit"
-                    target="_blank">
+                  <RouterLink class="nav-link nav-link-icon me-2" 
+                   to="nosotros"
+                    >
 
                     <p class="d-inline text-sm z-index-1 font-weight-semibold" data-bs-toggle="tooltip"
                       data-bs-placement="bottom" title="Star us on Github">Nosotros</p>
-                  </a>
+                  </RouterLink>
                 </li>
 
                 <li class="nav-item ms-lg-auto">
-                  <a class="nav-link nav-link-icon me-2" href="https://github.com/creativetimofficial/material-kit"
-                    target="_blank">
+                  <RouterLink class="nav-link nav-link-icon me-2" 
+                    to="contacto"
+                    >
                     <p class="d-inline text-sm z-index-1 font-weight-semibold" data-bs-toggle="tooltip"
                       data-bs-placement="bottom" title="Star us on Github">Contacto</p>
-                  </a>
+                  </RouterLink>
                 </li>
 
 
@@ -65,11 +69,12 @@
 
                 <li class="nav-item my-auto ms-3 ms-lg-0">
 
-                  <a href="https://www.creative-tim.com/product/material-kit-pro"
+                  <RouterLink 
+                    to="/login"
                     class="btn  bg-gradient-dark  mb-0 mt-2 mt-md-0">
                     <i class="fas fa-user me-1"></i>
 
-                    Login</a>
+                    Login</RouterLink>
 
                 </li>
               </ul>

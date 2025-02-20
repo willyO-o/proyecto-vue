@@ -32,6 +32,26 @@
                   </div>
                 </div>
 
+
+              </div>
+
+              <div v-if="carritoStore.carrito.length > 0" class="py-2">
+                <div class="border"></div>
+                <h5>
+                  Total : {{ carritoStore.calcularTotal() }} Bs.
+                </h5>
+                <div class="d-flex justify-content-between  ">
+                  <RouterLink to="/carrito" class="text-center">
+                    <i class="fas fa-shopping-cart me-2"></i>
+                    Ver Carrito
+                  </RouterLink>
+                  <div class="vr"></div>
+                  <RouterLink to="/carrito" class="text-center">
+                    <i class="fas fa-credit-card me-2"></i>
+                    Comprar
+                  </RouterLink>
+                </div>
+
               </div>
 
 
@@ -51,7 +71,7 @@
 
         <div v-for="item in carritoStore.carrito" :key="item.id" class="col-md-12 g-0">
 
-          <div class="d-flex  py-1 position-relative">
+          <div class="d-flex  py-1 position-relative pe-4">
             <span @click="carritoStore.eliminarProducto(item)" class="position-absolute top-0 end-0 mt-2 me-2">
               <i class="fas fa-trash-alt me-2 text-danger cursor-pointer"></i>
             </span>
@@ -61,12 +81,35 @@
             <div class="d-flex flex-column justify-content-center">
               <h6 class="mb-0 text-sm">{{ item.titulo }}</h6>
               <p class="text-xs text-secondary mb-0">
-                {{ item.cantidad }} x {{ item.precio }} Bs. 
-                </p>
+                {{ item.cantidad }} x {{ item.precio }} Bs.
+              </p>
             </div>
           </div>
 
         </div>
+
+        <!-- <div> -->
+        <div v-if="carritoStore.carrito.length > 0" class="py-2">
+          <div class="border"></div>
+          <h5>
+            Total : {{ carritoStore.calcularTotal() }} Bs.
+          </h5>
+          <div class="d-flex justify-content-between  ">
+            <RouterLink to="/carrito" class="text-center">
+              <i class="fas fa-shopping-cart me-2"></i>
+              Ver Carrito
+            </RouterLink>
+            <div class="vr"></div>
+            <RouterLink to="/carrito" class="text-center">
+              <i class="fas fa-credit-card me-2"></i>
+              Comprar
+            </RouterLink>
+          </div>
+
+        </div>
+
+        <!-- </div> -->
+
 
         <div v-show="carritoStore.carrito.length == 0" class=" text-center py-2">
           <h4>No hay Productos en el carrito</h4>

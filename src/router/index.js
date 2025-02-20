@@ -20,6 +20,31 @@ const router = createRouter({
           path: 'detalle-producto/:id',
           name: 'DetalleProducto',
           component: () => import('@/modules/public/views/DetalleProductoView.vue')
+        },
+        {
+          path: 'carrito',
+          name: 'Carrito',
+          component: () => import('@/modules/public/views/CarritoView.vue')
+        },
+        {
+          path: '/tienda',
+          name: 'Tienda',
+          component: () => import('@/modules/public/views/TiendaView.vue')
+        },
+        {
+          path: '/nosotros',
+          name: 'Nosotros',
+          component: () => import('@/modules/public/views/NosotrosView.vue')
+        },
+        {
+          path: '/contacto',
+          name: 'Contacto',
+          component: () => import('@/modules/public/views/ContactoView.vue')
+        },
+        {
+          path: '/login',
+          name: 'Login',
+          component: () => import('@/modules/public/views/LoginView.vue')
         }
       ]
     },

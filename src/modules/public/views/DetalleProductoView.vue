@@ -61,7 +61,7 @@
                         </div>
 
                         <div class="row">
-                            <div class="col-md-4 col-sm-6">
+                            <div class="col-md-7 col-lg-4 col-sm-5">
                                 <div class="d-flex justify-content-lg-start  p-1">
                                     <button 
                                     @click="reducirCantidad"
@@ -85,15 +85,16 @@
                         <div class="d-flex justify-content-between p-2">
                             <button 
                             @click="carritoStore.agregarProducto(producto,cantidad)"
+                            :disabled="producto.stock <= carritoStore.extraerCantidad(producto)"
                             class="btn btn-icon bg-gradient-info  w-50" >
                                 <i class="fas fa-shopping-cart me-2"></i>
                                 Agregar al Carrito
                             </button>
 
-                            <button class="btn btn-secondary w-50  ms-4">
+                            <RouterLink to="/carrito" class="btn btn-secondary w-50  ms-4">
                                 <i class="fas fa-credit-card me-2"></i>
                                 Comprar
-                            </button>
+                            </RouterLink>
                         
                         </div>
 
