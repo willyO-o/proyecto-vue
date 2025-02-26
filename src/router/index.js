@@ -60,6 +60,16 @@ const router = createRouter({
           path: '',
           name: 'PanelPrincipal',
           component: () => import('@/modules/admin/views/PanelPrincipal.vue'),
+        },
+        {
+          path: 'producto',
+          name: 'Producto',
+          component: () => import('@/modules/admin/views/ProductoView.vue')
+        },
+        {
+          path: '/producto/crear',
+          name: 'CrearProducto',
+          component: () => import('@/modules/admin/views/FormularioProductoView.vue')
         }
       ]
 
