@@ -44,22 +44,46 @@ const router = createRouter({
         {
           path: '/login',
           name: 'Login',
-          component: () => import('@/modules/public/views/LoginView.vue')
+          component: () => import('@/modules/public/views/LoginView.vue'),
+          beforeEnter: (to,from,next) =>{
+            const token = localStorage.getItem('token')
+            const usuario = localStorage.getItem('usuario')
+            const refreshToken = localStorage.getItem('refreshToken')
+            if (token && usuario && refreshToken) {
+              next('/admin')
+            } else {
+              next()
+            }
+          }
         }
       ]
     },
 
     // nivel 1 Privado Admin
     {
-      path:'/admin',
+      path: '/admin',
       name: 'AdminLayout',
       component: () => import('@/modules/admin/views/AdminLayout.vue'),
-      children:[
+      beforeEnter: (to, from, next) => {
+        const token = localStorage.getItem('token')
+        const usuario = localStorage.getItem('usuario')
+        const refreshToken = localStorage.getItem('refreshToken')
+        if (!token || !usuario || !refreshToken) {
+          next('/login')
+        } else {
+          next()
+        }
+      },
+      children: [
         // nivel 2 Privado Admin
         {
           path: '',
           name: 'PanelPrincipal',
           component: () => import('@/modules/admin/views/PanelPrincipal.vue'),
+          meta: {
+            requiresAuth: true,
+            roles: ['admin', 'superdadmin']
+          }
         },
         {
           path: 'producto',
@@ -70,7 +94,29 @@ const router = createRouter({
           path: '/producto/crear',
           name: 'CrearProducto',
           component: () => import('@/modules/admin/views/FormularioProductoView.vue')
+        },
+        {
+          path: '/producto/editar/:id',
+          name: 'EditarProducto',
+          component: () => import('@/modules/admin/views/FormularioProductoView.vue')
+        },
+        {
+          path: 'categoria',
+          name: 'Categoria',
+          component: () => import('@/modules/admin/views/CategoriaView.vue')
+        },
+        {
+          path: 'usuario',
+          name: 'Usuario',
+          component: () => import('@/modules/admin/views/UsuarioView.vue')
+        },
+        {
+          path: 'perfil',
+          name: 'PerfilUsuario',
+          component: () => import('@/modules/admin/views/PerfilUsuarioView.vue')
         }
+
+
       ]
 
     }
@@ -79,6 +125,23 @@ const router = createRouter({
 
 
 })
+
+
+// router.beforeEach((to, from, next) => {
+//   const token = localStorage.getItem('token')
+//   const usuario = localStorage.getItem('usuario')
+//   const refreshToken = localStorage.getItem('refreshToken')
+//   if (to.matched.some(record => record.meta.requiresAuth)) {
+//     if (!token || !usuario || !refreshToken) {
+//       next('/login')
+//     } else {
+//       next()
+//     }
+//   } else {
+//     next()
+//   }
+// })
+
 
 export default router;
 

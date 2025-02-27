@@ -19,6 +19,8 @@ const primeraImagen = (imgTexto) => {
 
 const convertirImagenes = (imgTexto) => {
 
+    if(imgTexto === '') return [];
+
     return JSON.parse(imgTexto) || [];
 }
 

@@ -15,3 +15,12 @@ export const datosUsuarioActual = async () =>{
 
     return resultado.data
 }
+
+export const logout = async (refreshToken) =>{
+    const resultado =  await axiosInstance.post('auth/logout',{
+        refresh_token: refreshToken
+    })
+
+    return resultado.data
+
+}

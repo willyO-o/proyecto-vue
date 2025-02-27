@@ -9,9 +9,11 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="input-group input-group-outline my-3">
-                            <Field v-model="datosProducto.nombre" type="text" class="form-control" name="titulo"
+                            <Field v-model="datosProducto.titulo" type="text" class="form-control" name="titulo"
                                 placeholder="Nombre del Producto" />
                         </div>
+                        <ErrorMessage class="text-danger" name="titulo" />
+
                     </div>
                     <div class="col-md-6">
 
@@ -26,6 +28,7 @@
                                 </option>
                             </Field>
                         </div>
+                        <ErrorMessage class="text-danger" name="categoria_id" />
                     </div>
                 </div>
                 <div class="row">
@@ -36,6 +39,7 @@
 
                             <Field v-model="datosProducto.precio" name="precio" type="number" class="form-control" />
                         </div>
+                        <ErrorMessage class="text-danger" name="precio" />
                     </div>
                     <div class="col-md-6">
                         <label class="form-label">Stock</label>
@@ -51,6 +55,8 @@
                             <Field v-model="datosProducto.descripcion" name="descripcion" class="form-control"
                                 as="textarea" placeholder="Descripcion del Producto" rows="4"></Field>
                         </div>
+                        <ErrorMessage class="text-danger" name="descripcion" />
+
                     </div>
 
                     <div class="col-md-12">
@@ -63,19 +69,20 @@
                                 Agregar
                             </button>
                         </div>
+                        <div v-if="imagenesSeleccionadas.length == 0" class="text-danger">
+                            Selecciona almenos una imagen
+                        </div>
 
 
                         <div class="card-group row">
 
 
-                            <div 
-                            v-for="(imagen, index) in imagenesSeleccionadas" :key="index"
-                            class="col-xl-3 col-md-4 mb-xl-0 mb-4">
+                            <div v-for="(imagen, index) in imagenesSeleccionadas" :key="index"
+                                class="col-xl-3 col-md-4 mb-xl-0 mb-4">
                                 <div class="card card-blog card-plain">
                                     <div class="card-header p-0 m-2 position-relative">
-                                        <span 
-                                        @click="quitarImagen(index)"
-                                        class="text-danger cursor-pointer position-absolute end-0 top-0 mt-2 me-2">
+                                        <span @click="quitarImagen(index)"
+                                            class="text-danger cursor-pointer position-absolute end-0 top-0 mt-2 me-2">
                                             <i class="fas fa-trash"></i>
                                         </span>
                                         <a class="d-block shadow-xl border-radius-xl">
@@ -88,9 +95,7 @@
                             </div>
 
 
-                            <div 
-                                v-if="imagenesSeleccionadas.length == 0"
-                            class="col-12 py-4">
+                            <div v-if="imagenesSeleccionadas.length == 0" class="col-12 py-4">
                                 <h4 class="text-center">No tienes Imagenes Seleccionadas</h4>
                             </div>
 
@@ -101,6 +106,12 @@
 
                     </div>
 
+                    <div class="col-12 ">
+                        <button type="submit" class="btn btn-dark">
+                            <i class="fas fa-save"></i>
+                            Guardar
+                        </button>
+                    </div>
 
                 </div>
             </Form>
@@ -119,11 +130,18 @@ import { ref, reactive, onBeforeMount } from 'vue';
 import { Form, Field, ErrorMessage } from 'vee-validate';
 
 import { listarCategorias } from '@/services/categoriaServicio'
+import { crearProducto, listarProductoId, actualizarProducto } from '@/services/productoServicio'
 
 import { productoValidationSchema } from '@/modules/admin/schemas/productoValidationSchema'
 
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
+
+const idProducto = ref(null);
+
 const datosProducto = reactive({
-    nombre: '',
+    titulo: '',
     descripcion: '',
     imagen: '',
     precio: 0,
@@ -143,15 +161,28 @@ const cargarCategorias = async () => {
 
     listadoCategorias.value = resultado.data;
 
-    console.log(listadoCategorias.value);
 }
 
 
 
-const enviarDatos = () => {
+const enviarDatos = async () => {
 
-    alert('Enviando datos')
-    console.log(datosProducto)
+    datosProducto.imagen = JSON.stringify(imagenesSeleccionadas.value);
+
+
+    if (idProducto.value != null) {
+
+        const respuesta = await actualizarProducto(idProducto.value, datosProducto)
+
+    } else {
+
+        const respuesta = await crearProducto(datosProducto)
+
+    }
+
+    router.push({ name: 'Producto' })
+
+
 }
 
 const agregarImagen = () => {
@@ -172,7 +203,26 @@ const quitarImagen = (index) => {
 }
 
 
-onBeforeMount(() => {
+
+
+onBeforeMount(async () => {
+
+
+    if (router.currentRoute.value.params.id) {
+        idProducto.value = router.currentRoute.value.params.id;
+
+        const producto = await listarProductoId(idProducto.value);
+
+        datosProducto.titulo = producto.titulo;
+        datosProducto.descripcion = producto.descripcion;
+        datosProducto.precio = producto.precio;
+        datosProducto.stock = producto.stock;
+        datosProducto.categoria_id = producto.categoria_id;
+
+        imagenesSeleccionadas.value = JSON.parse(producto.imagen);
+
+    }
+
     cargarCategorias();
 })
 

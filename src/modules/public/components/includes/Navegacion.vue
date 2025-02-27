@@ -25,27 +25,21 @@
               <ul class="navbar-nav navbar-nav-hover ms-auto">
 
                 <li class="nav-item ms-lg-auto">
-                  <RouterLink class="nav-link nav-link-icon me-2" 
-                    to="/"
-                    >
+                  <RouterLink class="nav-link nav-link-icon me-2" to="/">
 
                     <p class="d-inline text-sm z-index-1 font-weight-semibold" data-bs-toggle="tooltip"
                       data-bs-placement="bottom" title="Star us on Github">Inicio</p>
                   </RouterLink>
                 </li>
                 <li class="nav-item ms-lg-auto">
-                  <RouterLink class="nav-link nav-link-icon me-2" 
-                  to="/tienda"
-                    >
+                  <RouterLink class="nav-link nav-link-icon me-2" to="/tienda">
 
                     <p class="d-inline text-sm z-index-1 font-weight-semibold" data-bs-toggle="tooltip"
                       data-bs-placement="bottom" title="Star us on Github">Tienda</p>
                   </RouterLink>
                 </li>
                 <li class="nav-item ms-lg-auto">
-                  <RouterLink class="nav-link nav-link-icon me-2" 
-                   to="nosotros"
-                    >
+                  <RouterLink class="nav-link nav-link-icon me-2" to="nosotros">
 
                     <p class="d-inline text-sm z-index-1 font-weight-semibold" data-bs-toggle="tooltip"
                       data-bs-placement="bottom" title="Star us on Github">Nosotros</p>
@@ -53,9 +47,7 @@
                 </li>
 
                 <li class="nav-item ms-lg-auto">
-                  <RouterLink class="nav-link nav-link-icon me-2" 
-                    to="contacto"
-                    >
+                  <RouterLink class="nav-link nav-link-icon me-2" to="contacto">
                     <p class="d-inline text-sm z-index-1 font-weight-semibold" data-bs-toggle="tooltip"
                       data-bs-placement="bottom" title="Star us on Github">Contacto</p>
                   </RouterLink>
@@ -69,12 +61,19 @@
 
                 <li class="nav-item my-auto ms-3 ms-lg-0">
 
-                  <RouterLink 
-                    to="/login"
-                    class="btn  bg-gradient-dark  mb-0 mt-2 mt-md-0">
+                  <RouterLink v-if="verificarLogin" to="/login" class="btn  bg-gradient-dark  mb-0 mt-2 mt-md-0">
                     <i class="fas fa-user me-1"></i>
 
-                    Login</RouterLink>
+                    Login
+                  </RouterLink>
+                  <RouterLink v-else to="/admin" class="btn  bg-gradient-dark  mb-0 mt-2 mt-md-0">
+                    <i class="fas fa-user me-1"></i>
+                    Administración
+
+                  </RouterLink>
+
+
+
 
                 </li>
               </ul>
@@ -94,6 +93,23 @@
 import { RouterLink } from 'vue-router';
 
 import CarritoCompras from '@/modules/public/components/CarritoCompras.vue';
+
+
+const verificarLogin = () => {
+
+  const token = localStorage.getItem('token')
+  const usuario = localStorage.getItem('usuario')
+  const refreshToken = localStorage.getItem('refreshToken')
+  if (!token || usuario || refreshToken) {
+    return false
+  } else {
+    return true
+  }
+
+}
+
+
+
 
 
 

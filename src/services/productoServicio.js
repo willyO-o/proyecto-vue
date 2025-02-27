@@ -21,9 +21,38 @@ const listarProductoId = async (id)=>{
 }
 
 
+const crearProducto = async (producto) =>{
+
+    const resultado = await axiosInstance.post('productos', producto)
+
+    return resultado.data
+
+}
+
+
+const actualizarProducto = async (idProducto, producto) =>{
+
+    const resultado = await axiosInstance.put('productos/'+idProducto, producto)
+
+    return resultado.data
+
+}
+
+
+const eliminarProductoId = async (idProducto) =>{
+
+    const resultado = await axiosInstance.delete('productos/'+idProducto)
+
+    return resultado.data
+
+}
+
 
 
 export {
     listarProductos,
     listarProductoId,
+    crearProducto,
+    eliminarProductoId,
+    actualizarProducto
 }
